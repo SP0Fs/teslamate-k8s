@@ -56,7 +56,7 @@ spec:
               value: postgres-postgresql-primary.postgres.svc.cluster.local
           envFrom:
             - secretRef:
-                name: grafana-pass
+                name: teslamate-pass
           ports:
             - containerPort: 3000
               protocol: TCP
