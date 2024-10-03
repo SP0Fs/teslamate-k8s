@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: teslamate-ingress
+  name: grafana-ingress
   namespace: teslamate
   annotations:
     cert-manager.io/cluster-issuer: ca-issuer
@@ -15,22 +15,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - teslamate.spof.tech
-        - teslamate.leibold.tech
         - grafana.teslamate.spof.tech
         - grafana.teslamate.leibold.tech
-      secretName: teslamate-certs
+      secretName: teslamate-grafana-certs
   rules:
-    - host: teslamate.spof.tech
-      http:
-        paths:
-          - pathType: Prefix
-            path: /
-            backend:
-              service:
-                name: teslamate
-                port:
-                  number: 4000
     - host: grafana.teslamate.spof.tech
       http:
         paths:
@@ -41,16 +29,6 @@ spec:
                 name: teslamate
                 port:
                   number: 3000
-    - host: teslamate.leibold.tech
-      http:
-        paths:
-          - pathType: Prefix
-            path: /
-            backend:
-              service:
-                name: teslamate
-                port:
-                  number: 4000
     - host: grafana.teslamate.leibold.tech
       http:
         paths:

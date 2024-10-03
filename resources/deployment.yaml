@@ -34,6 +34,8 @@ spec:
               value: postgres-postgresql-primary.postgres.svc.cluster.local
             - name: MQTT_HOST
               value: mosquitto.mosquitto.svc.cluster.local
+            - name: TZ
+              value: Europe/Berlin
           envFrom:
             - secretRef:
                 name: teslamate-pass
@@ -52,6 +54,10 @@ spec:
               value: teslamate
             - name: DATABASE_HOST
               value: postgres-postgresql-primary.postgres.svc.cluster.local
+            - name: GF_SERVER_DOMAIN
+              value: "grafana.teslamate.leibold.tech"
+            - name: GF_SERVER_ROOT_URL
+              value: "https://grafana.teslamate.leibold.tech"
           envFrom:
             - secretRef:
                 name: teslamate-pass
