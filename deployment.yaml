@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: teslamate
+  name: teslamate
+  namespace: teslamate
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: teslamate
+  template:
+    metadata:
+      labels:
+        app: teslamate
+    spec:
+      volumes:
+        - name: teslamate-storage
+          persistentVolumeClaim:
+            claimName: teslamate-pvc
+      containers:
+        - image: teslamate/teslamate
+          name: teslamate
+          env:
+            - name: DATABASE_USER
+              value: teslamate
+            - name: DATABASE_NAME
+              value: teslamate
+            - name: DATABASE_HOST
+              value: postgres.postgres.svc.cluster.local
+          volumeMounts:
+            - mountPath: "/opt/app/import"
+              name: teslamate-storage
+          ports:
+            - containerPort: 4000
+              name: http
+              protocol: TCP
