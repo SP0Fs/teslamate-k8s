@@ -10,5 +10,6 @@ spec:
     - protocol: TCP
       port: 4000
       name: teslamate
-    - port: 3000
+    - protocol: TCP
+      port: 3000
       name: grafana
