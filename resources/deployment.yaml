@@ -58,11 +58,17 @@ spec:
               value: "grafana.teslamate.leibold.tech"
             - name: GF_SERVER_ROOT_URL
               value: "https://grafana.teslamate.leibold.tech"
-            - name: GF_LOG_LEVEL
-              value: debug
+            - name: GF_DATABASE_type
+              value: postgres
+            - name: GF_DATABASE_USER
+              value: grafana
+            - name: GF_DATABASE_HOST
+              value: postgres-postgresql-primary.postgres.svc.cluster.local
+            - name: GF_DATABASE_NAME
+              value: grafana
           envFrom:
             - secretRef:
-                name: teslamate-pass
+                name: grafana-pass
           ports:
             - containerPort: 3000
               protocol: TCP
