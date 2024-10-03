@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: homeassistant-ingress
-  namespace: homeassistant
+  name: teslamate-ingress
+  namespace: teslamate
   annotations:
     cert-manager.io/cluster-issuer: ca-issuer
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
@@ -15,27 +15,49 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - home.spof.tech
-        - home.leibold.tech
-      secretName: ha-certs
+        - teslamate.spof.tech
+        - teslamate.leibold.tech
+        - grafana.teslamate.spof.tech
+        - grafana.teslamate.leibold.tech
+      secretName: teslamate-certs
   rules:
-    - host: home.spof.tech
+    - host: teslamate.spof.tech
       http:
         paths:
           - pathType: Prefix
             path: /
             backend:
               service:
-                name: homeassistant
+                name: teslamate
                 port:
-                  number: 8123
-    - host: home.leibold.tech
+                  name: teslamate
+    - host: grafana.teslamate.spof.tech
       http:
         paths:
           - pathType: Prefix
             path: /
             backend:
               service:
-                name: homeassistant
+                name: teslamate
                 port:
-                  number: 8123
+                  name: grafana
+    - host: teslamate.leibold.tech
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: teslamate
+                port:
+                  name: teslamate
+    - host: grafana.teslamate.leibold.tech
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: teslamate
+                port:
+                  name: grafana

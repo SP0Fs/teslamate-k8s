@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: teslamate
+  name: teslamate
+  namespace: teslamate
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: teslamate
+  template:
+    metadata:
+      labels:
+        app: teslamate
+    spec:
+      volumes:
+        - name: teslamate-storage
+          persistentVolumeClaim:
+            claimName: teslamate-pvc
+        - name: teslamate-grafana-storage
+          persistentVolumeClaim:
+            claimName: teslamate-grafana-pvc
+      containers:
+        - image: teslamate/teslamate
+          name: teslamate
+          env:
+            - name: DATABASE_USER
+              value: teslamate
+            - name: DATABASE_NAME
+              value: teslamate
+            - name: DATABASE_HOST
+              value: postgres-postgresql-primary.postgres.svc.cluster.local
+            # - name: MQTT_HOST
+            #   value: mosquitto.mosquitto.svc.cluster.local
+          envFrom:
+            - secretRef:
+                name: teslamate-pass
+          volumeMounts:
+            - mountPath: "/opt/app/import"
+              name: teslamate-storage
+          ports:
+            - containerPort: 4000
+              name: http
+              protocol: TCP
+        - image: teslamate/grafana
+          name: grafana
+          env:
+            - name: DATABASE_USER
+              value: teslamate
+            - name: DATABASE_NAME
+              value: teslamate
+            - name: DATABASE_HOST
+              value: postgres-postgresql-primary.postgres.svc.cluster.local
+          envFrom:
+            - secretRef:
+                name: teslamate-pass
+          ports:
+            - containerPort: 3000
+              name: http
+              protocol: TCP
+          volumeMounts:
+            - mountPath: "/var/lib/grafana"
+              name: teslamate-grafana-storage
