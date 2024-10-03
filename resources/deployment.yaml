@@ -63,7 +63,6 @@ spec:
                 name: teslamate-pass
           ports:
             - containerPort: 3000
-              protocol: TCP
           volumeMounts:
             - mountPath: "/var/lib/grafana"
               name: teslamate-grafana-storage
