@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: teslamate
-  namespace: teslamate
+  namespace: argo-cd
 spec:
   project: spof-cluster
   sources:
