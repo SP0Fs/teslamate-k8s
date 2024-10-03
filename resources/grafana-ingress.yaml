@@ -29,7 +29,7 @@ spec:
                 name: teslamate
                 port:
                   number: 3000
-    - host: grafana.teslamate.leibold.tech
+    - host: grafana.leibold.tech
       http:
         paths:
           - pathType: Prefix
