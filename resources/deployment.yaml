@@ -32,8 +32,8 @@ spec:
               value: teslamate
             - name: DATABASE_HOST
               value: postgres-postgresql-primary.postgres.svc.cluster.local
-            # - name: MQTT_HOST
-            #   value: mosquitto.mosquitto.svc.cluster.local
+            - name: MQTT_HOST
+              value: mosquitto.mosquitto.svc.cluster.local
           envFrom:
             - secretRef:
                 name: teslamate-pass
