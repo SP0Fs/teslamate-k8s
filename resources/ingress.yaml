@@ -5,7 +5,7 @@ metadata:
   namespace: teslamate
   annotations:
     cert-manager.io/cluster-issuer: ca-issuer
-    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
     nginx.ingress.kubernetes.io/auth-tls-verify-client: "on"
     nginx.ingress.kubernetes.io/auth-tls-secret: "ingress-nginx/spof-cert"
     nginx.ingress.kubernetes.io/auth-tls-verify-depth: "1"
@@ -30,7 +30,7 @@ spec:
               service:
                 name: teslamate
                 port:
-                  name: teslamate
+                  number: 4000
     - host: grafana.teslamate.spof.tech
       http:
         paths:
@@ -40,7 +40,7 @@ spec:
               service:
                 name: teslamate
                 port:
-                  name: grafana
+                  number: 3000
     - host: teslamate.leibold.tech
       http:
         paths:
@@ -50,7 +50,7 @@ spec:
               service:
                 name: teslamate
                 port:
-                  name: teslamate
+                  number: 4000
     - host: grafana.teslamate.leibold.tech
       http:
         paths:
@@ -60,4 +60,4 @@ spec:
               service:
                 name: teslamate
                 port:
-                  name: grafana
+                  number: 3000
